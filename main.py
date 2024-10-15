@@ -101,7 +101,7 @@ def guild_info(guild_id):
         
         if guild:
             member = discord.request(route=f'/users/@me/guilds/{guild.id}/member', method='GET')
-            roles = [role['name'] for role in member.get('roles', [])]
+            roles = member.get('roles', [])
             
             # Get the permission names
             permissions = guild.permissions
