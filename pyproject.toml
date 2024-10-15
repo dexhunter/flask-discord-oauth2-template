@@ -1,0 +1,14 @@
+[project]
+name = "flask-discord-ouath-template"
+version = "0.1.0"
+description = "Flask Discord OAuth Template"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "discord-oauth2>=0.2",
+    "discord-py>=2.4.0",
+    "flask-discord>=0.1.69",
+    "flask>=3.0.3",
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.3",
+]

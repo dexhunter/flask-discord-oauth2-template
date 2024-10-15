@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guild Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    {% if is_member %}
+        <h1>{{ guild_name }}</h1>
+        <h2>Roles</h2>
+        <ul>
+            {% for role in roles %}
+            <li>{{ role }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Permissions</h2>
+        <p>Permission value: {{ permissions }}</p>
+        <ul>
+            {% for permission in permission_names %}
+            <li>{{ permission }}</li>
+            {% endfor %}
+        </ul>
+        {% if is_admin %}
+        <h2>Admin Only Section</h2>
+        <p>{{ admin_content }}</p>
+        {% endif %}
+    {% else %}
+        <h1>Error</h1>
+        <p>{{ error }}</p>
+    {% endif %}
+    <a href="{{ url_for('user_guilds') }}">Back to Guilds List</a>
+    <br>
+    <a href="{{ url_for('me') }}">Back to Home</a>
+</body>
+</html>

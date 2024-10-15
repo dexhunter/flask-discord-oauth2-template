@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Discord OAuth2 Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        .login-button {
+            display: inline-block;
+            background-color: #7289DA;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .login-button:hover {
+            background-color: #5a6eaf;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the FLASK Discord OAuth2 Example</h1>
+        <a href="{{ url_for('login') }}" class="login-button">Login with Discord</a>
+    </div>
+</body>
+</html>
