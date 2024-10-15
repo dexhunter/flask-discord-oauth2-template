@@ -7,6 +7,8 @@ DISCORD_CLIENT_SECRET=
 DISCORD_REDIRECT_URI=
 ```
 
+also update `DISCORD_REDIRECT_URI` for your domain and set `OAUTHLIB_INSECURE_TRANSPORT` to false in production.
+
 and run commands to run
 
 ```bash
