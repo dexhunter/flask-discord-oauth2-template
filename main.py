@@ -14,20 +14,12 @@ os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "true"    # !! Only in development e
 
 app.config["DISCORD_CLIENT_ID"] = os.getenv("DISCORD_CLIENT_ID")
 app.config["DISCORD_CLIENT_SECRET"] = os.getenv("DISCORD_CLIENT_SECRET")
-app.config["DISCORD_BOT_TOKEN"] = os.getenv("DISCORD_BOT_TOKEN")
-app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback"
+app.config["DISCORD_REDIRECT_URI"] = os.getenv("DISCORD_REDIRECT_URI")
 
 discord = DiscordOAuth2Session(app)
 
 
 HYPERLINK = '<a href="{}">{}</a>'
-
-
-def welcome_user(user):
-    dm_channel = discord.bot_request("/users/@me/channels", "POST", json={"recipient_id": user.id})
-    return discord.bot_request(
-        f"/channels/{dm_channel['id']}/messages", "POST", json={"content": "Thanks for authorizing the app!"}
-    )
 
 
 @app.route("/")
@@ -37,7 +29,7 @@ def index():
 
 @app.route("/login/")
 def login():
-    return discord.create_session(scope=["identify", "email", "guilds"])
+    return discord.create_session(scope=["identify", "guilds", "guilds.members.read"])
 
 
 @app.route("/login-data/")
@@ -65,9 +57,8 @@ def callback():
         token = discord.get_authorization_token()
         discord.save_authorization_token(token)
         
-        # Fetch and welcome the user
+        # Fetch the user
         user = discord.fetch_user()
-        welcome_user(user)
         
         return redirect(url_for("me"))  # Redirect to the /me endpoint
     except Exception as e:
@@ -109,7 +100,7 @@ def guild_info(guild_id):
         guild = next((g for g in user_guilds if g.id == guild_id), None)
         
         if guild:
-            member = discord.bot_request(f'/guilds/{guild_id}/members/{user.id}')
+            member = discord.request(route=f'/users/@me/guilds/{guild.id}/member', method='GET')
             roles = [role['name'] for role in member.get('roles', [])]
             
             # Get the permission names
